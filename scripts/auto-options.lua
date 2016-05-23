@@ -53,119 +53,75 @@ vo = {
 vo_opts = {
     [o.uq] = {
         ["scale"]  = "ewa_lanczossharp",
-        ["cscale"] = "ewa_lanczossoft",
-        ["dscale"] = "mitchell",
-        ["tscale"] = "oversample",
+        ["cscale"] = "ewa_lanczos",
+        ["dscale"] = "ewa_lanczos",
         ["scale-antiring"]  = "1",
-        ["cscale-antiring"] = "0.9",
-        ["scale-radius"]    = "3",
-
+        ["cscale-antiring"] = "1",
+        ["dscale-antiring"] = "1",
+        ["scale-radius"]    = "4",
+        ["cscale-radius"]    = "4",
+        ["dscale-radius"]    = "4",        
         ["dither-depth"]        = "auto",
         ["scaler-resizes-only"] = "yes",
         ["sigmoid-upscaling"]   = "yes",
-        
-
-        ["interpolation"]       = "yes",
-      --["interpolation-threshold"] = "0.0001",
-        ["correct-downscaling"] = "yes",
-        ["deband"]              = "yes",
-      --["waitvsync"]           = "yes",
-        ["prescale-passes"]     = "1",
-        ["prescale-downscaling-threshold"] = "1.5",
-        
-      --["prescale-luma"]       = "nnedi3",
-      --["nnedi3-upload"]       = "shader",
-      --["nnedi3-neurons"]      = "64",
-      --["nnedi3-window"]       = "8x4",
-        
-        
-        ["gamma"]                = "0.9338",
-      --["target-prim"]         = "bt.2020",
-      --["target-trc"]          = "bt.1886",
-        ["3dlut-size"]        = "256x256x256",
+        ["linear-scaling"]    = "yes",
         ["blend-subtitles"]     = "video",
+        ["correct-downscaling"] = "yes",
+        ["deband"]            = "yes",     
+        ["prescale-passes"]     = "2",
+        ["prescale-downscaling-threshold"] = "1.5",
+        ["3dlut-size"]        = "512x512x512",        
     },
 
     [o.hq] = {
         ["scale"]  = "ewa_lanczossharp",
         ["cscale"] = "ewa_lanczos",
         ["dscale"] = "spline64",
-      --["tscale"] = "oversample", 
         ["scale-antiring"]  = "0.8",
         ["cscale-antiring"] = "0.8",
-        ["dscale-antiring"] = "0.0",
         ["scale-radius"]    = "3",
-        ["cscale-radius"]    = "3",
-        ["dscale-radius"]    = "3",
-        
-
+        ["cscale-radius"]    = "4",
+        ["dscale-radius"]    = "3",        
         ["dither-depth"]        = "auto",
         ["scaler-resizes-only"] = "yes",
         ["sigmoid-upscaling"]   = "yes",
         ["linear-scaling"]    = "yes",
         ["blend-subtitles"]     = "video",
-
-        ["interpolation"]     =  "no",
-      --["interpolation-threshold"] = "0.0001",
         ["correct-downscaling"] = "yes",
-        ["deband"]            = "yes",
-      --["waitvsync"]         = "yes",
+        ["deband"]            = "yes",     
         ["prescale-passes"]     = "2",
         ["prescale-downscaling-threshold"] = "1.5",
-        
-      --["gamma"]                = "0.9338",
-      --["target-prim"]         = "bt.2020",
-      --["target-trc"]          = "bt.1886",
-        ["3dlut-size"]        = "256x256x256", 
+        ["3dlut-size"]        = "384x384x384",        
     },
 
     [o.mq] = {
-        ["scale"]  = "lanczos",
+        ["scale"]  = "ewa_lanczossharp",
         ["cscale"] = "ewa_lanczos",
         ["dscale"] = "spline36",
-      --["tscale"] = "oversample", 
         ["scale-antiring"]  = "0.8",
         ["cscale-antiring"] = "0.8",
-        ["dscale-antiring"] = "0.0",
-        ["scale-radius"]    = "4",
+        ["scale-radius"]    = "3",
         ["cscale-radius"]    = "3",
-        ["dscale-radius"]    = "3",
-        
-
+        ["dscale-radius"]    = "3",        
         ["dither-depth"]        = "auto",
         ["scaler-resizes-only"] = "yes",
         ["sigmoid-upscaling"]   = "yes",
         ["linear-scaling"]    = "yes",
         ["blend-subtitles"]     = "video",
-
-        ["interpolation"]     =  "no",
-      --["interpolation-threshold"] = "0.0001",
         ["correct-downscaling"] = "yes",
-        ["deband"]            = "yes",
-      --["waitvsync"]         = "yes",
+        ["deband"]            = "yes",     
         ["prescale-passes"]     = "2",
         ["prescale-downscaling-threshold"] = "1.5",
-        
-      --["gamma"]                = "0.9338",
-      --["target-prim"]         = "bt.2020",
-      --["target-trc"]          = "bt.1886",
         ["3dlut-size"]        = "256x256x256",        
     },
 
     [o.lq] = {          
         ["scale"]  = "bilinear",
         ["cscale"] = "bilinear",
-        ["dscale"] = "bilinear",
-      --["tscale"] = "bilinear",  
-        ["interpolation"]     =  "no", 
-        ["dither-depth"]        = "auto",
-      --["target-prim"]         = "bt.709",
-        ["scaler-resizes-only"] = "yes",
-      --["sigmoid-upscaling"]   = "yes",
-        ["blend-subtitles"]     = "yes",
-      --["waitvsync"]           = "yes",
-
-      --["interpolation"]     = function () return is_high_res(o) and "no" or "yes" end,        
+        ["dscale"] = "bilinear",      
+        ["dither-depth"]        = "auto",      
+        ["scaler-resizes-only"] = "yes",     
+        ["blend-subtitles"]     = "yes",      
     },
 }
 
@@ -188,15 +144,12 @@ options = {
     },
 
     [o.mq] = {
-        ["options/vo"] = function () return vo_property_string(o.mq, vo, vo_opts) end,
-        ["options/video-sync"] = "audio",
-      --["options/vd-lavc-threads"] = "16",
+        ["options/vo"] = function () return vo_property_string(o.mq, vo, vo_opts) end,   
         ["options/hwdec"] = "auto",
     },
 
     [o.lq] = {
         ["options/vo"] = function () return vo_property_string(o.lq, vo, vo_opts) end,
-        ["options/video-sync"] = "audio",
         ["options/hwdec"] = "auto",
     },
 }

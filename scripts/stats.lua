@@ -18,10 +18,10 @@ local o = {
     debug = false,
 
     -- Text style
-    font = "Source Sans Pro",
+    font = "HiraginoSansGB-W3",
     font_size = 11,
     font_color = "FFFFFF",
-    border_size = 1.0,
+    border_size = 0.5,
     border_color = "262626",
     shadow_x_offset = 0.0,
     shadow_y_offset = 0.0,
@@ -92,6 +92,9 @@ function add_file(s)
         append_property(s, sec, "demuxer-cache-duration",
                         {prefix="+", suffix=" sec", nl="", indent=o.prefix_sep,
                          prefix_sep="", no_prefix_markup=true})
+        append_property(s, sec, "cache-speed",
+                        {prefix="", suffix="", nl="", indent=o.prefix_sep,
+                         prefix_sep="", no_prefix_markup=true})
     end
 end
 
@@ -104,10 +107,15 @@ function add_video(s)
     end
 
     if append_property(s, sec, "video-codec", {prefix="Video:", nl="", indent=""}) then
-        append_property(s, sec, "hwdec-active",
+        if not append_property(s, sec, "hwdec-current",
+                        {prefix="(hwdec:", nl="", indent=" ",
+                         no_prefix_markup=true, suffix=")"},
+                        {no=true, [""]=true}) then
+            append_property(s, sec, "hwdec-active",
                         {prefix="(hwdec)", nl="", indent=" ",
                          no_prefix_markup=true, no_value=true},
                         {no=true})
+        end
     end
     append_property(s, sec, "avsync", {prefix="A-V:"})
     if append_property(s, sec, "drop-frame-count", {prefix="Dropped:"}) then
@@ -142,6 +150,7 @@ function add_video(s)
     append_property(s, sec, "video-params/pixelformat", {prefix="Pixel format:"})
     append_property(s, sec, "video-params/colormatrix", {prefix="Colormatrix:"})
     append_property(s, sec, "video-params/primaries", {prefix="Primaries:"})
+    append_property(s, sec, "video-params/gamma", {prefix="Gamma:"})
     append_property(s, sec, "video-params/colorlevels", {prefix="Levels:"})
     append_property(s, sec, "packet-video-bitrate", {prefix="Bitrate:", suffix=" kbps"})
 end
@@ -270,7 +279,5 @@ end
 function b(t)
     return o.b1 .. t .. o.b0
 end
-
-
 
 mp.add_key_binding("i", mp.get_script_name(), main, {repeatable=true})
