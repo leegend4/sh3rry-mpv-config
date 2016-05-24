@@ -25,3 +25,7 @@
 [Argon-'s mpv-config](https://github.com/Argon-/mpv-config)
 
 [mpv-stats](https://github.com/Argon-/mpv-stats)
+
+[mpv-plugin-streamcache](https://github.com/lvml/mpv-plugin-streamcache)
+
+[mpv lua scripts](https://github.com/mpv-player/mpv/tree/master/TOOLS/lua)
