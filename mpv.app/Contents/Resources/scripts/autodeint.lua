@@ -1,6 +1,3 @@
--- From: https://github.com/mpv-player/mpv/tree/master/TOOLS/lua
--- (with slight modifications)
---
 -- This script uses the lavfi idet filter to automatically insert the
 -- appropriate deinterlacing filter based on a short section of the
 -- currently playing video.
@@ -62,7 +59,6 @@ function start_detect()
     -- exit if detection is already in progress
     if timer then
         mp.msg.warn("already detecting!")
-        mp.osd_message("autodeint: already detecting!")
         return
     end
 
@@ -74,12 +70,10 @@ function start_detect()
                               detect_label, pullup_label, ivtc_detect_label)
     if not mp.command(cmd) then
         mp.msg.error("failed to insert detection filters")
-        mp.osd_message("autodeint: failed to insert detection filters")
         return
     end
 
     -- wait to gather data
-    mp.osd_message("autodeint: starting detection")
     timer = mp.add_timeout(detect_seconds, select_filter)
 end
 
@@ -94,10 +88,6 @@ progressive, interlaced_tff, interlaced_bff, interlaced = 0, 1, 2, 3, 4
 function judge(label)
     -- get the metadata
     local result = mp.get_property_native(string.format("vf-metadata/%s", label))
-    -- filter might have been removed by third party
-    if not result or next(result) == nil then
-        return progressive
-    end
     num_tff          = tonumber(result["lavfi.idet.multiple.tff"])
     num_bff          = tonumber(result["lavfi.idet.multiple.bff"])
     num_progressive  = tonumber(result["lavfi.idet.multiple.progressive"])
@@ -105,10 +95,10 @@ function judge(label)
     num_interlaced   = num_tff + num_bff
     num_determined   = num_interlaced + num_progressive
 
-    mp.msg.verbose(label .. " progressive    = "..num_progressive)
-    mp.msg.verbose(label .. " interlaced-tff = "..num_tff)
-    mp.msg.verbose(label .. " interlaced-bff = "..num_bff)
-    mp.msg.verbose(label .. " undetermined   = "..num_undetermined)
+    mp.msg.verbose(label.." progressive    = "..num_progressive)
+    mp.msg.verbose(label.." interlaced-tff = "..num_tff)
+    mp.msg.verbose(label.." interlaced-bff = "..num_bff)
+    mp.msg.verbose(label.." undetermined   = "..num_undetermined)
 
     if num_determined < num_undetermined then
         mp.msg.warn("majority undetermined frames")
@@ -129,7 +119,6 @@ function select_filter()
     verdict = judge(detect_label)
     if verdict == progressive then
         mp.msg.info("progressive: doing nothing")
-        mp.osd_message("autodeint: no deinterlacing required")
         stop_detect()
         return
     elseif verdict == interlaced_tff then
@@ -144,13 +133,11 @@ function select_filter()
     verdict = judge(ivtc_detect_label)
     if verdict == progressive then
         mp.msg.info(string.format("telecinied with %s field dominance: using pullup", mp.get_property("field-dominance")))
-        mp.osd_message("autodeint: using pullup")
         stop_detect()
     else
         mp.msg.info(string.format("interlaced with %s field dominance: setting deinterlace property", mp.get_property("field-dominance")))
         del_filter_if_present(pullup_label)
-        mp.osd_message(string.format("autodeint: setting deinterlace property (%s)", mp.get_property("field-dominance")))
-        mp.set_property("deinterlace", "yes")
+        mp.set_property("deinterlace","yes")
         stop_detect()
     end
 end

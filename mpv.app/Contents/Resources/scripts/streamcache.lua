@@ -146,4 +146,3 @@ function streamcache_on_loaded()
 end
 
 mp.register_event("file-loaded", streamcache_on_loaded)
-
