@@ -7,7 +7,7 @@
 
 ####Features:
 
-* support Hardware decode on H.264 videos.
+* Support hardware decode.
 
 * High display quality with low cpu occupancy and heat for common.
 
