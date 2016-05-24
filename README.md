@@ -1,16 +1,16 @@
 ##sh3rry-mpvconfig
 
-> [mpv](https://mpv.io/) is a free, open source, and cross-platform media player
+> [MPV](https://mpv.io/) is a free, open source, and cross-platform media player
  
-This is a mpv binary with my own optimized configuration files,tested on my 13-inch MacBook Pro with Retina display
+This is a MPV player binary with optimized configuration files for my own,tested on 13-inch MacBook Pro with Retina display.
 
 ####Features:
 
-*Hardware decode H.264 videos.
+* support Hardware decode on H.264 videos.
 
-*High display quality with low cpu occupancy and heat for common
+* High display quality with low cpu occupancy and heat for common.
 
-*Auto change to power-save configuration when you are unplugged.
+* Auto change to power-save configuration when you are unplugged.
 
 
 ####Thanks:
