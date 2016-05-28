@@ -52,71 +52,45 @@ vo = {
 -- Specify VO sub-options for different levels
 vo_opts = {
     [o.uq] = {
-        ["scale"]  = "ewa_lanczossharp",
-        ["cscale"] = "ewa_lanczossharp",
-        ["dscale"] = "ewa_lanczossharp",
-        ["scale-antiring"]  = "1.0",
-        ["cscale-antiring"] = "1.0",
-        ["dscale-antiring"] = "1.0",
-        ["scale-radius"]    = "4",
-        ["cscale-radius"]    = "4",
-        ["dscale-radius"]    = "4",        
-        ["dither-depth"]        = "auto",
-        ["scaler-resizes-only"] = "yes",
-        ["sigmoid-upscaling"]   = "yes",
-        ["linear-scaling"]    = "yes",
-        ["blend-subtitles"]     = "video",
-        ["correct-downscaling"] = "yes",
-        ["deband"]            = "yes",     
-        ["3dlut-size"]        = "512x512x512",        
+         
     },
 
     [o.hq] = {
-        ["scale"]  = "ewa_lanczossharp",
-        ["cscale"] = "ewa_lanczos",
-        ["dscale"] = "catmull_rom",
-        ["scale-antiring"]  = "1.0",
-        ["cscale-antiring"] = "1.0",
-        ["dscale-antiring"] = "1.0",
-        ["scale-radius"]    = "3",
-        ["cscale-radius"]    = "3",       
-        ["dither-depth"]        = "auto",
-        ["scaler-resizes-only"] = "yes",
-        ["sigmoid-upscaling"]   = "yes",
-        ["linear-scaling"]    = "yes",
-        ["blend-subtitles"]     = "video",
-        ["correct-downscaling"] = "yes",
-        ["deband"]            = "yes",            
-        ["3dlut-size"]        = "384x384x384",        
+             
     },
 
-    [o.mq] = {
+    [o.mq] = { 
         ["scale"]  = "lanczos",
         ["cscale"] = "ewa_lanczos",
         ["dscale"] = "catmull_rom",
         ["scale-antiring"]  = "1.0",
-        ["cscale-antiring"] = "1.0",
-        ["dscale-antiring"] = "1.0",
+        ["cscale-antiring"] = "1.0",        
         ["scale-radius"]    = "4",
-        ["cscale-radius"]    = "3",         
+        ["cscale-radius"]    = "3", 
+        ["scaler-lut-size"]    = "8",           
         ["linear-scaling"]    = "yes",     
         ["dither-depth"]        = "auto",
         ["scaler-resizes-only"] = "yes",
         ["sigmoid-upscaling"]   = "yes",        
         ["blend-subtitles"]     = "video",
         ["correct-downscaling"] = "yes",
-        ["deband"]            = "yes",             
-        ["3dlut-size"]        = "256x256x256",         
-        ["interpolation"]      = "yes",
+        ["deband"]            = "yes",
+        ["deband-iterations"] = "2",          
+        ["3dlut-size"]        = "256x256x256",                
+        ["es"]= "yes",
+        ["icc-profile-auto"]      = "yes",      
     },
 
-    [o.lq] = {          
+    [o.lq] = {                 
         ["scale"]  = "bilinear",
         ["cscale"] = "bilinear",
         ["dscale"] = "bilinear",      
         ["dither-depth"]        = "auto",      
         ["scaler-resizes-only"] = "yes",     
-        ["blend-subtitles"]     = "yes",      
+        ["blend-subtitles"]     = "video",
+        ["es"]= "yes", 
+        ["icc-profile-auto"]      = "yes",     
+
     },
 }
 
@@ -126,23 +100,31 @@ vo_opts = {
 options = {
     [o.uq] = {
         ["options/vo"] = function () return vo_property_string(o.uq, vo, vo_opts) end,
-        ["options/hwdec"] = "auto",        
+        ["options/hwdec"] = "videotoolbox",   
+        ["options/video-output-levels"] = "full",    
+        ["options/hwdec-codecs"] = "all", 
     },
     
     [o.hq] = {
         ["options/vo"] = function () return vo_property_string(o.hq, vo, vo_opts) end,
-        ["options/hwdec"] = "auto",
+        ["options/hwdec"] = "videotoolbox",
+        ["options/video-output-levels"] = "full",
+        ["options/hwdec-codecs"] = "all",
               
     },
 
     [o.mq] = {
         ["options/vo"] = function () return vo_property_string(o.mq, vo, vo_opts) end,   
-        ["options/hwdec"] = "auto",
+        ["options/hwdec"] = "videotoolbox",        
+        ["options/video-output-levels"] = "full",
+        ["options/hwdec-codecs"] = "all",
     },
 
     [o.lq] = {
         ["options/vo"] = function () return vo_property_string(o.lq, vo, vo_opts) end,
-        ["options/hwdec"] = "auto",
+        ["options/hwdec"] = "videotoolbox",
+        ["options/video-output-levels"] = "full",
+        ["options/hwdec-codecs"] = "all",
     },
 }
 
