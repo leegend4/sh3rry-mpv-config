@@ -72,13 +72,14 @@ vo_opts = {
         ["dither-depth"]        = "auto",
         ["scaler-resizes-only"] = "yes",
         ["sigmoid-upscaling"]   = "yes",        
-        ["blend-subtitles"]     = "video",
+        ["blend-subtitles"]     = "yes",
         ["correct-downscaling"] = "yes",
         ["deband"]            = "yes",
         ["deband-iterations"] = "2",          
         ["3dlut-size"]        = "256x256x256",                
         ["es"]= "yes",
-        ["icc-profile-auto"]      = "yes",      
+        ["icc-profile-auto"]      = "yes", 
+
     },
 
     [o.lq] = {                 
@@ -87,7 +88,7 @@ vo_opts = {
         ["dscale"] = "bilinear",      
         ["dither-depth"]        = "auto",      
         ["scaler-resizes-only"] = "yes",     
-        ["blend-subtitles"]     = "video",
+        ["blend-subtitles"]     = "yes",
         ["es"]= "yes", 
         ["icc-profile-auto"]      = "yes",     
 
