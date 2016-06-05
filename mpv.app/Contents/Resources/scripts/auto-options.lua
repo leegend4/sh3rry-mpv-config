@@ -52,20 +52,18 @@ vo = {
 -- Specify VO sub-options for different levels
 vo_opts = {
     [o.uq] = {
-         
-    },
+             },
 
     [o.hq] = {
-             
-    },
+             },
 
     [o.mq] = { 
         ["scale"]  = "lanczos",
-        ["cscale"] = "ewa_lanczos",
+        ["cscale"] = "spline36",
         ["dscale"] = "catmull_rom",
         ["scale-antiring"]  = "1.0",
         ["cscale-antiring"] = "1.0",        
-        ["scale-radius"]    = "4",
+        ["scale-radius"]    = "3",
         ["cscale-radius"]    = "3", 
         ["scaler-lut-size"]    = "8",           
         ["linear-scaling"]    = "yes",     
@@ -79,7 +77,8 @@ vo_opts = {
         ["3dlut-size"]        = "256x256x256",                
         ["es"]= "yes",
         ["icc-profile-auto"]      = "yes", 
-
+        ["prescale-luma"]       = "superxbr",
+        ["prescale-downscaling-threshold"] = "1.0",
     },
 
     [o.lq] = {                 
@@ -89,9 +88,7 @@ vo_opts = {
         ["dither-depth"]        = "auto",      
         ["scaler-resizes-only"] = "yes",     
         ["blend-subtitles"]     = "yes",
-        ["es"]= "yes", 
-        ["icc-profile-auto"]      = "yes",     
-
+        ["icc-profile-auto"]      = "yes",
     },
 }
 
