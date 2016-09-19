@@ -27,7 +27,7 @@ local opts = require 'mp.options'
 local o = {
     hq = "desktop",
     mq = "laptop",
-    lq = "laptop (low-power)",
+    lq = "low-energy",
     highres_threshold = "1920:1200",
     force_low_res = false,
     verbose = false,
@@ -70,8 +70,10 @@ vo_opts = {
         ["deband"]              = "yes", 
         ["deband-iterations"]   = "2",        
         ["3dlut-size"]          = "128x128x128",   
+        ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
+        ["icc-cache-dir"]       = "/Users/sh3rry/Documents/",    
         ["scaler-lut-size"]     = "8",                 
-        ["icc-profile-auto"]    = "yes", 
+        
     },
 
     [o.lq] = {
@@ -81,7 +83,9 @@ vo_opts = {
         ["dither-depth"]        = "auto",      
         ["scaler-resizes-only"] = "yes",     
         ["blend-subtitles"]     = "yes",
-        ["icc-profile-auto"]    = "yes",
+        ["3dlut-size"]          = "128x128x128",   
+        ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
+        ["icc-cache-dir"]       = "/Users/sh3rry/Documents/",    
     },
 }
 
