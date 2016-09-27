@@ -21,15 +21,14 @@ if mp.get_property_bool("option-info/vo/set-from-commandline") then
     return
 end
 
-local f = require 'auto-options-functions'
 local opts = require 'mp.options'
+local utils = require 'mp.utils'
 
 local o = {
     hq = "desktop",
     mq = "laptop",
     lq = "low-energy",
-    highres_threshold = "1920:1200",
-    force_low_res = false,
+    highres_desktop_threshold = "1920:1080",
     verbose = false,
     duration = 5,
     duration_err_mult = 2,
@@ -37,23 +36,18 @@ local o = {
 opts.read_options(o)
 
 
--- Specify a VO for each level
+-- Specify mpv options for each level
 
-vo = {
-    [o.hq] = "opengl-hq",
-    [o.mq] = "opengl-hq",
-    [o.lq] = "opengl",
-}
-
-
--- Specify VO sub-options for different levels
-
-vo_opts = {
+local options = {
     [o.hq] = {
 
     },
 
     [o.mq] = {
+        ["vo"]                   = "opengl",
+        ["video-output-levels"]  = "full",
+        ["hwdec-codecs"]         = "all",
+        ["hwdec"]  = "no",
         ["scale"]  = "lanczos",
         ["cscale"] = "ewa_lanczos",
         ["dscale"] = "catmull_rom",        
@@ -69,61 +63,129 @@ vo_opts = {
         ["correct-downscaling"] = "yes",
         ["deband"]              = "yes", 
         ["deband-iterations"]   = "2",        
-        ["3dlut-size"]          = "128x128x128",   
+        ["icc-3dlut-size"]      = "128x128x128",   
         ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
         ["icc-cache-dir"]       = "/Users/sh3rry/Documents/",    
         ["scaler-lut-size"]     = "8",   
-        ["fbo-format"]          = "rgb16f",                   
+        ["opengl-fbo-format"]   = "rgb16f",                 
     },
 
     [o.lq] = {
+        ["vo"]                   = "opengl",
+        ["video-output-levels"]  = "full",
+        ["hwdec-codecs"]         = "all",
+        ["hwdec"]  = "yes",
         ["scale"]  = "bilinear",
         ["cscale"] = "bilinear",
         ["dscale"] = "bilinear",      
         ["dither-depth"]        = "auto",      
         ["scaler-resizes-only"] = "yes",     
         ["blend-subtitles"]     = "yes",
-        ["3dlut-size"]          = "128x128x128",   
+        ["icc-3dlut-size"]      = "128x128x128",   
         ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
-        ["icc-cache-dir"]       = "/Users/sh3rry/Documents/",    
+        ["icc-cache-dir"]       = "/Users/sh3rry/Documents/", 
     },
 }
 
 
--- Specify general mpv options for different levels
+-- Select the options level appropriate for this computer
+function determine_level(o, options)
+    -- Default level
+    local level = o.lq
 
-options = {
-    [o.hq] = {
+    -- Overwrite level from command line with --script-opts=ao-level=<level>
+    local overwrite = mp.get_opt("ao-level")
+    if overwrite then
+        if not options[overwrite] then
+            print("Forced level does not exist: " .. overwrite)
+            return level
+        end
+        return overwrite
+    end
 
-    },
+    -- Call an external bash function determining whether this is a desktop or laptop
+    local loc = exec({"bash", "-c", 'source "$HOME"/local/shell/location-detection && is-desktop'})
+    if loc.error then
+        loc.status = 255
+    end
 
-    [o.mq] = {
-        ["options/vo"] = function () return vo_property_string(o.mq, vo, vo_opts) end,
-        ["options/hwdec"] = "no",
-        ["options/video-output-levels"] = "full",
-        ["options/hwdec-codecs"] = "all",        
-    },
+    -- Desktop -> hq
+    if loc.status == 0 then
+        level = o.hq
+    -- Laptop  -> mq/lq
+    elseif loc.status == 1 then
+        level = o.mq
+        -- Go down to lq when we are on battery
+        bat = exec({"/usr/bin/pmset", "-g", "ac"})
+        if bat.stdout == "No adapter attached.\n" then
+            level = o.lq
+        end
+    elseif o.verbose then
+        print("unable to determine location, using default level: " .. level)
+    end
 
-    [o.lq] = {
-        ["options/vo"] = function () return vo_property_string(o.lq, vo, vo_opts) end,
-        ["options/hwdec"] = "auto",
-        ["options/video-output-levels"] = "full",
-        ["options/hwdec-codecs"] = "all",
-    },
-}
+    return level
+end
+
+
+-- Determine if the currently used resolution is higher than o.highres_threshold
+function high_res_desktop(o)
+    sp_ret = exec({"/usr/local/bin/resolution", "compare", o.highres_desktop_threshold})
+    return not sp_ret.error and sp_ret.status > 2
+end
+
+
+function high_res_video(o)
+    print("TODO: high_res_video(o)")
+    return false
+end
+
+
+function exec(process)
+    p_ret = utils.subprocess({args = process})
+    if p_ret.error and p_ret.error == "init" then
+        print("ERROR executable not found: " .. process[1])
+    end
+    return p_ret
+end
+
+
+function set_ASS(b)
+    return mp.get_property_osd("osd-ass-cc/" .. (b and "0" or "1"))
+end
+
+
+function red_border(s)
+    return set_ASS(true) .. "{\\bord1}{\\3c&H3300FF&}{\\3a&H20&}" .. s .. "{\\r}" .. set_ASS(false)
+end
+
+
+function print_status(name, value, o)
+    if not value or not o.level then
+        return
+    end
+
+    if o.err_occ then
+        print("Error setting level: " .. o.level)
+        mp.osd_message(red_border("Error setting level: ") .. o.level, o.duration * o.duration_err_mult)
+    else
+        print("Active level: " .. o.level)
+        mp.osd_message(o.level
+             .. (high_res_desktop(o) and "\n↳ desktop: high res" or "")
+             .. (high_res_video(o) and "\n↳ video: high res" or ""), o.duration)
+    end
+    mp.unobserve_property(print_status)
+end
 
 
 -- Print status information to VO window and terminal
-
 mp.observe_property("vo-configured", "bool",
                     function (name, value) print_status(name, value, o) end)
 
 
--- Determined level and set the appropriate options
-
+-- Determined level and apply the appropriate options
 function main()
-    o.force_low_res = mp.get_opt("ao-flr")
-    o.level = determine_level(o, vo, vo_opts, options)
+    o.level = determine_level(o, options)
     o.err_occ = false
     for k, v in pairs(options[o.level]) do
         if type(v) == "function" then
