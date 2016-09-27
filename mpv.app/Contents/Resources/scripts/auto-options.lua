@@ -56,7 +56,7 @@ vo_opts = {
     [o.mq] = {
         ["scale"]  = "lanczos",
         ["cscale"] = "ewa_lanczos",
-        ["dscale"] = "catmull_rom",
+        ["dscale"] = "catmull_rom",        
         ["scale-antiring"]  = "1.0",
         ["cscale-antiring"] = "1.0", 
         ["dscale-antiring"] = "1.0",       
@@ -72,8 +72,8 @@ vo_opts = {
         ["3dlut-size"]          = "128x128x128",   
         ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
         ["icc-cache-dir"]       = "/Users/sh3rry/Documents/",    
-        ["scaler-lut-size"]     = "8",                 
-        
+        ["scaler-lut-size"]     = "8",   
+        ["fbo-format"]          = "rgb16f",                   
     },
 
     [o.lq] = {
@@ -99,9 +99,9 @@ options = {
 
     [o.mq] = {
         ["options/vo"] = function () return vo_property_string(o.mq, vo, vo_opts) end,
-        ["options/hwdec"] = "auto",
+        ["options/hwdec"] = "no",
         ["options/video-output-levels"] = "full",
-        ["options/hwdec-codecs"] = "all",
+        ["options/hwdec-codecs"] = "all",        
     },
 
     [o.lq] = {
