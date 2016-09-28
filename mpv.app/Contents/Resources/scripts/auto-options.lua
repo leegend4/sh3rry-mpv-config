@@ -68,7 +68,8 @@ local options = {
         ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
         ["icc-cache-dir"]       = "/Users/sh3rry/Documents/", 
         ["dither-depth"]        = "auto",           
-        ["opengl-fbo-format"]   = "rgb16f",        
+        ["opengl-fbo-format"]   = "rgb16f",   
+        ["vf"]                  = "lavfi=[hqdn3d=2],lavfi=[pp=de/-al]", 
     },
 
     [o.lq] = {
