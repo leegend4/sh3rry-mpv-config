@@ -65,7 +65,7 @@ local options = {
         ["deband"]              = "yes", 
         ["deband-iterations"]   = "3",        
         ["icc-3dlut-size"]      = "128x128x128",   
-        ["icc-profile"]         = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
+        ["icc-profile"]         = "/Users/sh3rry/Library/ColorSync/Profiles/sh3rry.icc",
         ["icc-cache-dir"]       = "/Users/sh3rry/Documents/", 
         ["dither-depth"]        = "auto",           
         ["opengl-fbo-format"]   = "rgb16f",   
@@ -84,7 +84,7 @@ local options = {
         ["scaler-resizes-only"]  = "yes",     
         ["blend-subtitles"]      = "yes",
         ["icc-3dlut-size"]       = "128x128x128",   
-        ["icc-profile"]          = "/Library/ColorSync/Profiles/display1-b91bfdfca72aa3c2b2d019435f73b494.icc",
+        ["icc-profile"]          = "/Users/sh3rry/Library/ColorSync/Profiles/sh3rry.icc",
         ["icc-cache-dir"]        = "/Users/sh3rry/Documents/",
     },
 }
