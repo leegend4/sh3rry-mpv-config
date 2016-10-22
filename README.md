@@ -3,29 +3,27 @@
 > [MPV](https://mpv.io/) is a free, open source, and cross-platform media player.
 
 
->This is a MPV player binary with optimized configuration files for my own,tested on 13-inch MacBook Pro with Retina display.
+>This is a MPV player binary with optimized configuration files for my own,performed well on my MacBook Pro (Retina, 13-inch, Early 2015).
 
 ####Features:
 
-* Support hardware decode.
+* Auto software/hardware decode.
 
-* High display quality with low cpu occupancy and heat for common.
+* Usually high display quality with low CPU occupancy and temp.
 
-* Auto change to power-save configuration when you are unplugged.
+* Auto switch configuration when use battery.
 
 
 ####Thanks:
  
-[Reference Manual](https://mpv.io/manual/master/)
-
-[ChrisK's mpv builds for Mac OS X](http://sva.wakku.to/~chris/mpv_builds/)
-
-[Ahjolinna's MPV conf build (⌐■_■)](https://github.com/ahjolinna/mpv-conf)
+[Official Reference Manual](https://mpv.io/manual/master/)
 
 [Argon-'s mpv-config](https://github.com/Argon-/mpv-config)
 
-[mpv-stats](https://github.com/Argon-/mpv-stats)
+[OS X builds by stolendata](https://laboratory.stolendata.net/~djinn/mpv_osx/)
 
-[mpv-plugin-streamcache](https://github.com/lvml/mpv-plugin-streamcache)
+[Ahjolinna's MPV conf build (⌐■_■)](https://github.com/ahjolinna/mpv-conf)
+
+[mpv-stats](https://github.com/Argon-/mpv-stats)
 
 [mpv lua scripts](https://github.com/mpv-player/mpv/tree/master/TOOLS/lua)
