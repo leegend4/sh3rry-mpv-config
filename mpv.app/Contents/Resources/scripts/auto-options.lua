@@ -25,7 +25,7 @@ local opts = require 'mp.options'
 local utils = require 'mp.utils'
 
 local o = {
-    hq = "desktop",
+    hq = "none",
     mq = "laptop",
     lq = "low-energy",
     highres_desktop_threshold = "1920:1080",
@@ -40,7 +40,6 @@ opts.read_options(o)
 
 local options = {
     [o.hq] = {
-
     },
 
     [o.mq] = {
@@ -93,7 +92,7 @@ local options = {
 -- Select the options level appropriate for this computer
 function determine_level(o, options)
     -- Default level
-    local level = o.lq
+    local level = o.mq
 
     -- Overwrite level from command line with --script-opts=ao-level=<level>
     local overwrite = mp.get_opt("ao-level")
