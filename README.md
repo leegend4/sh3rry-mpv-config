@@ -1,4 +1,4 @@
-##sh3rry-mpvconfig
+##sh3rry-mpv
 
 > [MPV](https://mpv.io/) is a free, open source, and cross-platform media player.
 
@@ -7,20 +7,17 @@
 
 ####Features:
 
-* Auto software/hardware decode.
+* Usually high display quality with low occupancy and temperature.
 
-* Usually high display quality with low CPU occupancy and temp.
+* Auto switch software/hardware decoder.
 
 * Auto switch configuration when use battery.
-
 
 ####Thanks:
  
 [Official Reference Manual](https://mpv.io/manual/master/)
 
 [Argon-'s mpv-config](https://github.com/Argon-/mpv-config)
-
-[OS X builds by stolendata](https://laboratory.stolendata.net/~djinn/mpv_osx/)
 
 [Ahjolinna's MPV conf build (⌐■_■)](https://github.com/ahjolinna/mpv-conf)
 
