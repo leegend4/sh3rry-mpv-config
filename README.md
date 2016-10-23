@@ -2,7 +2,6 @@
 
 > [MPV](https://mpv.io/) is a free, open source, and cross-platform media player.
 
-
 >This is a MPV player binary with optimized configuration files for my own,performed well on my MacBook Pro (Retina, 13-inch, Early 2015).
 
 ####Features:
