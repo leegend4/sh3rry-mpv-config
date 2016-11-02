@@ -64,7 +64,7 @@ local options = {
         ["icc-profile"]         = "~/Library/ColorSync/Profiles/sh3rry.icc",
         ["icc-cache-dir"]       = "~/Documents/",
         ["icc-3dlut-size"]      = "128x128x128",
-        ["dither-depth"]        = "auto",
+        ["dither-depth"]        = "auto"
     },
 
     [o.lq] = {
@@ -80,7 +80,7 @@ local options = {
         ["icc-profile"]          = "~/Library/ColorSync/Profiles/sh3rry.icc",
         ["icc-cache-dir"]        = "~/Documents/",
         ["icc-3dlut-size"]       = "128x128x128",
-        ["dither-depth"]         = "auto",
+        ["dither-depth"]         = "auto"
     },
 }
 
