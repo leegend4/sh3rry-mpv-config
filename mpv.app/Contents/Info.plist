@@ -173,7 +173,7 @@
       </dict>
     </array>
     <key>CFBundleExecutable</key>
-    <string>mpv</string>
+    <string>mpv-wrapper.sh</string>
     <key>CFBundleIconFile</key>
     <string>icon</string>
     <key>CFBundleIdentifier</key>
@@ -185,7 +185,7 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.24.0</string>
+    <string>0.25.0</string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>CFBundleURLTypes</key>
